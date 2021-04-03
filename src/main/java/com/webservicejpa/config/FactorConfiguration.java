@@ -17,6 +17,7 @@ import javax.persistence.Persistence;
 
 @Configuration
 @EnableJpaRepositories(basePackages = "com.webservicejpa")
+@EnableTransactionManagement
 public class FactorConfiguration {
 
     @Bean(name = "entityManagerFactory")
@@ -28,6 +29,9 @@ public class FactorConfiguration {
     public EntityManager getEntityManager() {
        return this.entityManagerFactory().createEntityManager();
     }
+
+    @Bean(name = "transactionManager")
+    public PlatformTransactionManager dbTransactionManager() { return new JpaTransactionManager(); }
 
     @Bean
     public void setDefaultValues() {
