@@ -11,6 +11,6 @@ public class WebserviceJpaApplication {
 		new SpringApplicationBuilder(WebserviceJpaApplication.class)
 				.run(args);
 	}
-
 }
+
 
