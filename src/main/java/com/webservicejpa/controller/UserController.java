@@ -4,10 +4,7 @@ import com.webservicejpa.entities.User;
 import com.webservicejpa.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -22,6 +19,12 @@ public class UserController {
     public ResponseEntity<List<User>> findAll() {
         List<User> u = userService.findAll();
         return ResponseEntity.ok().body(u);
+    }
+
+    @GetMapping("/filter-user/{id}")
+    public ResponseEntity<User> findUserById(@PathVariable("id") Long id) {
+        User user = userService.findById(id);
+        return ResponseEntity.ok().body(user);
     }
 
 

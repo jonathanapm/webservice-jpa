@@ -33,13 +33,13 @@ public class FactorConfiguration {
     @Bean(name = "transactionManager")
     public PlatformTransactionManager dbTransactionManager() { return new JpaTransactionManager(); }
 
-    @Bean
-    public void setDefaultValues() {
-        User user = new User(null, "Maria Lacerda", "maria@gmail.com", "9999999", "123456789");
-        User user2 = new User(null, "João Lucas", "joao@gmail.com", "88888888", "123456789");
-        getEntityManager().getTransaction().begin();
-        getEntityManager().persist(user);
-        getEntityManager().persist(user2);
-        getEntityManager().getTransaction().commit();
-    }
+//    @Bean
+//    public void setDefaultValues() {
+//        User user = new User(null, "Maria Lacerda", "maria@gmail.com", "9999999", "123456789");
+//        User user2 = new User(null, "João Lucas", "joao@gmail.com", "88888888", "123456789");
+//        getEntityManager().getTransaction().begin();
+//        getEntityManager().persist(user);
+//        getEntityManager().persist(user2);
+//        getEntityManager().getTransaction().commit();
+//    }
 }
