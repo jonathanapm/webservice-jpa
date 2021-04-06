@@ -1,5 +1,6 @@
 package com.webservicejpa.config;
 
+import com.webservicejpa.entities.Order;
 import com.webservicejpa.entities.User;
 import com.webservicejpa.repository.UserRepository;
 import org.springframework.context.annotation.Bean;
@@ -14,6 +15,7 @@ import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
+import java.time.Instant;
 
 @Configuration
 @EnableJpaRepositories(basePackages = "com.webservicejpa")
@@ -38,8 +40,15 @@ public class FactorConfiguration {
 //        User user = new User(null, "Maria Lacerda", "maria@gmail.com", "9999999", "123456789");
 //        User user2 = new User(null, "João Lucas", "joao@gmail.com", "88888888", "123456789");
 //        getEntityManager().getTransaction().begin();
+//
 //        getEntityManager().persist(user);
 //        getEntityManager().persist(user2);
+//
+//        Order order1 = new Order(null, Instant.now(), user);
+//        Order order2 = new Order(null, Instant.now(), user2);
+//
+//        getEntityManager().persist(order1);
+//        getEntityManager().persist(order2);
 //        getEntityManager().getTransaction().commit();
 //    }
 }

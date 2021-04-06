@@ -1,5 +1,7 @@
 package com.webservicejpa.entities;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+
 import javax.persistence.*;
 import java.time.Instant;
 import java.util.Objects;
@@ -11,6 +13,7 @@ public class Order {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
     private Instant moment;
 
     @ManyToOne
@@ -21,7 +24,7 @@ public class Order {
     }
 
     public Order(Long id, Instant moment, User client) {
-        id = id;
+        this.id = id;
         this.moment = moment;
         this.client = client;
     }

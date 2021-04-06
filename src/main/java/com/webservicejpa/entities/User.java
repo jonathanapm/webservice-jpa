@@ -1,6 +1,8 @@
 package com.webservicejpa.entities;
 
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -18,6 +20,12 @@ public class User {
     private String phone;
     private String password;
 
+    /**
+     * Lazy Loading -> Associação de n ordens para um usuário funciona no JPA mas
+     * na associação de um usuário para n ordens nõa, por isso foi utilizado
+     * o json ignore para não entrar em loop.
+     */
+    @JsonIgnore
     @OneToMany(mappedBy = "client")
     private List<Order> orders = new ArrayList();
 
