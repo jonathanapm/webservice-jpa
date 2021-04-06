@@ -2,6 +2,7 @@ package com.webservicejpa.config;
 
 import com.webservicejpa.entities.Category;
 import com.webservicejpa.entities.Order;
+import com.webservicejpa.entities.Product;
 import com.webservicejpa.entities.User;
 import com.webservicejpa.entities.enums.OrderStatus;
 import com.webservicejpa.repository.UserRepository;
@@ -18,6 +19,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
 import java.time.Instant;
+import java.util.HashSet;
 
 @Configuration
 @EnableJpaRepositories(basePackages = "com.webservicejpa")
@@ -59,6 +61,14 @@ public class FactorConfiguration {
         getEntityManager().persist(category1);
         getEntityManager().persist(category2);
         getEntityManager().persist(category3);
+
+        Product product1 = new Product(null, "The lord of rings", "Os senhor dos anéis", 90.5, "");
+        Product product2 = new Product(null, "Star Wars II", "Star Wars Episode II", 220.5, "");
+        Product product3 = new Product(null, "Star Wars III", "Star Wars Episode III - Ameaça fantasma", 400.5, "");
+
+        getEntityManager().persist(product1);
+        getEntityManager().persist(product2);
+        getEntityManager().persist(product3);
 
         getEntityManager().getTransaction().commit();
     }
