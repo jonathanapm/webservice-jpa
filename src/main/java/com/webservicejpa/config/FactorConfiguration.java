@@ -1,5 +1,6 @@
 package com.webservicejpa.config;
 
+import com.webservicejpa.entities.Category;
 import com.webservicejpa.entities.Order;
 import com.webservicejpa.entities.User;
 import com.webservicejpa.entities.enums.OrderStatus;
@@ -36,20 +37,29 @@ public class FactorConfiguration {
     @Bean(name = "transactionManager")
     public PlatformTransactionManager dbTransactionManager() { return new JpaTransactionManager(); }
 
-//    @Bean
-//    public void setDefaultValues() {
-//        User user = new User(null, "Maria Lacerda", "maria@gmail.com", "9999999", "123456789");
-//        User user2 = new User(null, "João Lucas", "joao@gmail.com", "88888888", "123456789");
-//        getEntityManager().getTransaction().begin();
-//
-//        getEntityManager().persist(user);
-//        getEntityManager().persist(user2);
-//
-//        Order order1 = new Order(null, Instant.now(), OrderStatus.DELIVERED, user);
-//        Order order2 = new Order(null, Instant.now(), OrderStatus.SHIPPED,  user2);
-//
-//        getEntityManager().persist(order1);
-//        getEntityManager().persist(order2);
-//        getEntityManager().getTransaction().commit();
-//    }
+    @Bean
+    public void setDefaultValues() {
+        User user = new User(null, "Maria Lacerda", "maria@gmail.com", "9999999", "123456789");
+        User user2 = new User(null, "João Lucas", "joao@gmail.com", "88888888", "123456789");
+        getEntityManager().getTransaction().begin();
+
+        getEntityManager().persist(user);
+        getEntityManager().persist(user2);
+
+        Order order1 = new Order(null, Instant.now(), OrderStatus.DELIVERED, user);
+        Order order2 = new Order(null, Instant.now(), OrderStatus.SHIPPED,  user2);
+
+        getEntityManager().persist(order1);
+        getEntityManager().persist(order2);
+
+        Category category1 = new Category(null, "Electronics");
+        Category category2 = new Category(null, "Books");
+        Category category3 = new Category(null, "Computers");
+
+        getEntityManager().persist(category1);
+        getEntityManager().persist(category2);
+        getEntityManager().persist(category3);
+
+        getEntityManager().getTransaction().commit();
+    }
 }
