@@ -2,6 +2,7 @@ package com.webservicejpa.config;
 
 import com.webservicejpa.entities.Order;
 import com.webservicejpa.entities.User;
+import com.webservicejpa.entities.enums.OrderStatus;
 import com.webservicejpa.repository.UserRepository;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
@@ -44,8 +45,8 @@ public class FactorConfiguration {
 //        getEntityManager().persist(user);
 //        getEntityManager().persist(user2);
 //
-//        Order order1 = new Order(null, Instant.now(), user);
-//        Order order2 = new Order(null, Instant.now(), user2);
+//        Order order1 = new Order(null, Instant.now(), OrderStatus.DELIVERED, user);
+//        Order order2 = new Order(null, Instant.now(), OrderStatus.SHIPPED,  user2);
 //
 //        getEntityManager().persist(order1);
 //        getEntityManager().persist(order2);
