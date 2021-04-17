@@ -39,7 +39,7 @@ public class FactorConfiguration {
     @Bean(name = "transactionManager")
     public PlatformTransactionManager dbTransactionManager() { return new JpaTransactionManager(); }
 
-    @Bean
+//    @Bean
     public void setDefaultValues() {
         User user = new User(null, "Maria Lacerda", "maria@gmail.com", "9999999", "123456789");
         User user2 = new User(null, "João Lucas", "joao@gmail.com", "88888888", "123456789");
@@ -65,6 +65,15 @@ public class FactorConfiguration {
         Product product1 = new Product(null, "The lord of rings", "Os senhor dos anéis", 90.5, "");
         Product product2 = new Product(null, "Star Wars II", "Star Wars Episode II", 220.5, "");
         Product product3 = new Product(null, "Star Wars III", "Star Wars Episode III - Ameaça fantasma", 400.5, "");
+
+        getEntityManager().persist(product1);
+        getEntityManager().persist(product2);
+        getEntityManager().persist(product3);
+
+        product1.getCategories().add(category2);
+        product2.getCategories().add(category1);
+        product2.getCategories().add(category3);
+        product3.getCategories().add(category3);
 
         getEntityManager().persist(product1);
         getEntityManager().persist(product2);
