@@ -2,10 +2,14 @@ package com.webservicejpa.entities;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.webservicejpa.entities.enums.OrderStatus;
+import lombok.EqualsAndHashCode;
+import lombok.ToString;
 
 import javax.persistence.*;
 import java.time.Instant;
+import java.util.HashSet;
 import java.util.Objects;
+import java.util.Set;
 
 @Entity
 @Table(name = "TB_ORDER")
@@ -23,8 +27,12 @@ public class Order {
 
     private Integer orderStatus;
 
-    public Order() {
-    }
+    @OneToMany(mappedBy = "id.order")
+    private Set<OrderItem> items = new HashSet<>();
+
+    @OneToOne(mappedBy = "order", cascade = CascadeType.ALL)
+    private Payment payment;
+
 
     public Order(Long id, Instant moment, OrderStatus orderStatus, User client) {
         this.id = id;
@@ -35,6 +43,17 @@ public class Order {
 
     public Long getId() {
         return id;
+    }
+
+    public Payment getPayment() {
+        return payment;
+    }
+
+    public void setPayment(Payment payment) {
+        this.payment = payment;
+    }
+
+    public Order() {
     }
 
     public void setId(Long id) {
@@ -65,16 +84,18 @@ public class Order {
         this.orderStatus = orderStatus.getOrderStatus();
     }
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        Order order = (Order) o;
-        return Objects.equals(id, order.id);
+    public Set<OrderItem> getItems() {
+        return this.items;
     }
 
-    @Override
-    public int hashCode() {
-        return Objects.hash(id);
+    //Modelo Java EE deve ter o get para ser visualizado no json
+    public Double getTotal() {
+        double sum = 0.0;
+
+        for (OrderItem x : items) {
+            sum = sum + x.getSubTotal();
+        }
+
+        return sum;
     }
 }

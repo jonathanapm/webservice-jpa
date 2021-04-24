@@ -1,9 +1,6 @@
 package com.webservicejpa.config;
 
-import com.webservicejpa.entities.Category;
-import com.webservicejpa.entities.Order;
-import com.webservicejpa.entities.Product;
-import com.webservicejpa.entities.User;
+import com.webservicejpa.entities.*;
 import com.webservicejpa.entities.enums.OrderStatus;
 import com.webservicejpa.repository.UserRepository;
 import org.springframework.context.annotation.Bean;
@@ -39,7 +36,7 @@ public class FactorConfiguration {
     @Bean(name = "transactionManager")
     public PlatformTransactionManager dbTransactionManager() { return new JpaTransactionManager(); }
 
-//    @Bean
+    @Bean
     public void setDefaultValues() {
         User user = new User(null, "Maria Lacerda", "maria@gmail.com", "9999999", "123456789");
         User user2 = new User(null, "João Lucas", "joao@gmail.com", "88888888", "123456789");
@@ -48,11 +45,15 @@ public class FactorConfiguration {
         getEntityManager().persist(user);
         getEntityManager().persist(user2);
 
-        Order order1 = new Order(null, Instant.now(), OrderStatus.DELIVERED, user);
-        Order order2 = new Order(null, Instant.now(), OrderStatus.SHIPPED,  user2);
+        Order order1 = new Order(null, Instant.now(), OrderStatus.PAID, user);
+        Order order2 = new Order(null, Instant.now(), OrderStatus.WAITING_PAYMENT,  user2);
+        Order order3 = new Order(null, Instant.now(), OrderStatus.WAITING_PAYMENT,  user2);
+
+
 
         getEntityManager().persist(order1);
         getEntityManager().persist(order2);
+        getEntityManager().persist(order3);
 
         Category category1 = new Category(null, "Electronics");
         Category category2 = new Category(null, "Books");
@@ -78,6 +79,19 @@ public class FactorConfiguration {
         getEntityManager().persist(product1);
         getEntityManager().persist(product2);
         getEntityManager().persist(product3);
+
+        OrderItem orderItem1 = new OrderItem(order1, product1,2, product1.getPrice());
+        OrderItem orderItem2 = new OrderItem(order1, product3,1, product1.getPrice());
+        OrderItem orderItem3 = new OrderItem(order2, product2,5, product2.getPrice());
+
+        getEntityManager().persist(orderItem1);
+        getEntityManager().persist(orderItem2);
+        getEntityManager().persist(orderItem3);
+
+        Payment payment = new Payment(null, Instant.now().plusSeconds(6000L), order1);
+        order1.setPayment(payment);
+
+        getEntityManager().persist(order1);
 
         getEntityManager().getTransaction().commit();
     }

@@ -1,5 +1,7 @@
 package com.webservicejpa.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.sun.scenario.effect.impl.prism.PrDrawable;
 import com.webservicejpa.entities.pk.OrderItemPk;
 
 import javax.persistence.EmbeddedId;
@@ -14,8 +16,9 @@ public class OrderItem implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
+    //Quando é criado uma classe auxiliar (id composto), deve ser inicializada
     @EmbeddedId
-    private OrderItemPk id;
+    private OrderItemPk id = new OrderItemPk();
 
     private Integer quantity;
 
@@ -25,10 +28,27 @@ public class OrderItem implements Serializable {
     }
 
     public OrderItem(Order order, Product product, Integer quantity, Double price) {
+        super();
         this.quantity = quantity;
         this.price = price;
-        this.id.setOrder(order);
-        this.id.setProduct(product);
+        id.setOrder(order);
+        id.setProduct(product);
+    }
+
+    public Order getOrder() {
+        return id.getOrder();
+    }
+
+    public void setOrder(Order order) {
+        id.setOrder(order);
+    }
+
+    public Product getProduct() {
+        return id.getProduct();
+    }
+
+    public void setProduct(Product product) {
+        id.setProduct(product);
     }
 
     public Integer getQuantity() {
@@ -47,32 +67,8 @@ public class OrderItem implements Serializable {
         this.price = price;
     }
 
-    public Order getOrder() {
-       return this.id.getOrder();
+    public Double getSubTotal() {
+        return price * quantity;
     }
 
-    public void setOrder(Order order) {
-        this.id.setOrder(order);
-    }
-
-    public Product getProduct() {
-        return this.id.getProduct();
-    }
-
-    public void setProduct(Product product) {
-        this.id.setProduct(product);
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        OrderItem orderItem = (OrderItem) o;
-        return id.equals(orderItem.id);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(id);
-    }
 }
