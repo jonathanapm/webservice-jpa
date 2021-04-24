@@ -1,11 +1,13 @@
 package com.webservicejpa.services.impl;
 
 import com.webservicejpa.entities.User;
+import com.webservicejpa.exceptions.ResourceNotFoundException;
 import com.webservicejpa.repository.UserRepository;
 import com.webservicejpa.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.sql.SQLException;
 import java.util.List;
 import java.util.Optional;
 
@@ -23,7 +25,7 @@ public class UserServiceImpl implements UserService {
     @Override
     public User findById(Long id) {
         Optional<User> user = userRepository.findById(id);
-        return user.get();
+        return user.orElseThrow(() -> new ResourceNotFoundException(id));
     }
 
     @Override
