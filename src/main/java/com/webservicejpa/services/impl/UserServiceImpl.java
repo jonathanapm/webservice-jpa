@@ -35,4 +35,21 @@ public class UserServiceImpl implements UserService {
     public void delete(Long id) {
         userRepository.deleteById(id);
     }
+
+    @Override
+    public User update(Long id, User user) {
+
+        /**Instância o usuário e não acessa o banco de dados por enquanto, ou seja
+        a classe é monitororada e podemos trabalhar com ela**/
+        User entity = userRepository.getOne(id);
+        updateData(entity, user);
+
+        return userRepository.save(entity);
+    }
+
+    private void updateData(User entity, User obj) {
+        entity.setEmail(obj.getEmail());
+        entity.setName(obj.getName());
+        entity.setPhone(obj.getPhone());
+    }
 }
