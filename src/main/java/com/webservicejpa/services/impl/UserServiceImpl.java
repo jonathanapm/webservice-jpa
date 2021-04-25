@@ -10,6 +10,7 @@ import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.stereotype.Service;
 
+import javax.persistence.EntityNotFoundException;
 import java.sql.SQLException;
 import java.util.List;
 import java.util.Optional;
@@ -49,13 +50,18 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public User update(Long id, User user) {
+        try {
+            /**Instância o usuário e não acessa o banco de dados por enquanto, ou seja
+             a classe é monitorada e podemos trabalhar com ela**/
+            User entity = userRepository.getOne(id);
 
-        /**Instância o usuário e não acessa o banco de dados por enquanto, ou seja
-        a classe é monitororada e podemos trabalhar com ela**/
-        User entity = userRepository.getOne(id);
-        updateData(entity, user);
+            updateData(entity, user);
 
-        return userRepository.save(entity);
+            return userRepository.save(entity);
+        } catch (EntityNotFoundException e) {
+            throw new ResourceNotFoundException(e.getMessage());
+        }
+
     }
 
     private void updateData(User entity, User obj) {
