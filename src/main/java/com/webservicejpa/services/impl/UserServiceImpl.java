@@ -1,10 +1,13 @@
 package com.webservicejpa.services.impl;
 
 import com.webservicejpa.entities.User;
+import com.webservicejpa.exceptions.DatabaseException;
 import com.webservicejpa.exceptions.ResourceNotFoundException;
 import com.webservicejpa.repository.UserRepository;
 import com.webservicejpa.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.stereotype.Service;
 
 import java.sql.SQLException;
@@ -35,7 +38,13 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public void delete(Long id) {
-        userRepository.deleteById(id);
+        try {
+            userRepository.deleteById(id);
+        } catch (EmptyResultDataAccessException e) {
+            throw new ResourceNotFoundException(id);
+        } catch (DatabaseException e) {
+            throw new DatabaseException(e.getMessage());
+        }
     }
 
     @Override
