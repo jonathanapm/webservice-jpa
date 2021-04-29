@@ -116,6 +116,25 @@
 			</plugin>
 		</plugins>
 		<finalName>webservicejpa</finalName>
+
 	</build>
+
+	<profiles>
+		<profile>
+			<id>dev</id>
+			<properties>
+				<activatedProperties>dev</activatedProperties>
+			</properties>
+			<activation>
+				<activeByDefault>true</activeByDefault>
+			</activation>
+		</profile>
+		<profile>
+			<id>hom</id>
+			<properties>
+				<activatedProperties>hom</activatedProperties>
+			</properties>
+		</profile>
+	</profiles>
 
 </project>
